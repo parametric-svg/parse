@@ -22,18 +22,15 @@ parametric-svg-parser
 
 **A JS-based parser for parametric.svg graphics**
 
-
-**Heads up!** This is totally a work in progress. [Thoughts and ideas][] are very welcome.
-
-[Thoughts and ideas]:  https://github.com/tomekwi/parametric-svg-parser/issues
+Works in node and in browsers.
 
 
 
 
-<div                                             id="/installation">&nbsp;</div>
+<div                                                  id="/install">&nbsp;</div>
 
-Installation
-------------
+Install
+-------
 
 ```sh
 $ npm install parametric-svg-parser
@@ -42,12 +39,24 @@ $ npm install parametric-svg-parser
 
 
 
-<div                                                    id="/usage">&nbsp;</div>
+<div                                                      id="/use">&nbsp;</div>
 
-Usage
------
+Use
+---
 
-*Work in progress…*
+```js
+const parse = require('parametric-svg-parser');
+
+const svg = domify('<svg><rect parametric:width="a + 5" /></svg>')
+const ast = parse(svg);
+ast;
+//» { type: 'ParametricSvgAst',
+//    version: 1,
+//    parameters: [object Set],
+//    defaults: [object Set] }
+```
+
+You can now pass the `ast` to **[parametric-svg-patch](https://www.npmjs.com/package/parametric-svg-patch)**.
 
 
 
