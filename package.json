@@ -1,5 +1,5 @@
 {
-  "name": "parametric-svg-parser",
+  "name": "parametric-svg-parse",
   "version": "0.0.0-work-in-progress",
   "description": "A JS-based parser for parametric.svg graphics",
   "dependencies": {},
@@ -45,6 +45,6 @@
   "author": "Tomek Wiszniewski <t.wiszniewski@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "git@github.com:tomekwi/parametric-svg-parser"
+    "url": "git@github.com:parametric-svg/parse"
   }
 }

@@ -1,12 +1,12 @@
 [![Coveralls – test coverage
-](https://img.shields.io/coveralls/tomekwi/parametric-svg-parser.svg?style=flat-square)
-](https://coveralls.io/r/tomekwi/parametric-svg-parser)
+](https://img.shields.io/coveralls/parametric-svg/parse.svg?style=flat-square)
+](https://coveralls.io/r/parametric-svg/parse)
  [![Travis – build status
-](https://img.shields.io/travis/tomekwi/parametric-svg-parser/master.svg?style=flat-square)
-](https://travis-ci.org/tomekwi/parametric-svg-parser)
+](https://img.shields.io/travis/parametric-svg/parse/master.svg?style=flat-square)
+](https://travis-ci.org/parametric-svg/parse)
  [![David – status of dependencies
-](https://img.shields.io/david/tomekwi/parametric-svg-parser.svg?style=flat-square)
-](https://david-dm.org/tomekwi/parametric-svg-parser)
+](https://img.shields.io/david/parametric-svg/parse.svg?style=flat-square)
+](https://david-dm.org/parametric-svg/parse)
  [![Stability: experimental
 ](https://img.shields.io/badge/stability-experimental-yellow.svg?style=flat-square)
 ](https://nodejs.org/api/documentation.html#documentation_stability_index)
@@ -17,8 +17,8 @@
 
 
 
-parametric-svg-parser
-=====================
+parametric-svg-parse
+====================
 
 **A JS-based parser for parametric.svg graphics**
 
@@ -33,7 +33,7 @@ Install
 -------
 
 ```sh
-$ npm install parametric-svg-parser
+$ npm install parametric-svg-parse
 ```
 
 
@@ -45,7 +45,7 @@ Use
 ---
 
 ```js
-const parse = require('parametric-svg-parser');
+const parse = require('parametric-svg-parse');
 
 const svg = domify('<svg><rect parametric:width="a + 5" /></svg>')
 const ast = parse(svg);
