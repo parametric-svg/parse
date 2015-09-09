@@ -47,7 +47,13 @@ Use
 ```js
 const parse = require('parametric-svg-parse');
 
-const svg = domify('<svg><rect parametric:width="a + 5" /></svg>')
+// In the browser:
+  const domify = require('domify');
+  const svg = domify('<svg><rect parametric:width="a + 5" /></svg>');
+
+// …or in node:
+  const svg = document.querySelect('#my-svg');
+
 const ast = parse(svg);
 ast;
 //» { type: 'ParametricSvgAst',
