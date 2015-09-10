@@ -10,7 +10,7 @@ const crawl = (parentAddress) => (attributes, element, indexInParent) => {
       address,
       name: localName.replace(/^parametric:/, ''),  // POC
       dependencies: [],
-      relation: new Function(`return ${value}`),  // Proof of concept
+      relation: () => Number(value),  // Proof of concept
     }));
 
   return arrayFrom(element.children).reduce(
