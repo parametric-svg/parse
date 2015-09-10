@@ -1,4 +1,4 @@
-import {PARAMETRIC_NAMESPACE} from "../../../source/settings";
+import {PARAMETRIC_NAMESPACE} from '../../module/constants';
 
 
 export default

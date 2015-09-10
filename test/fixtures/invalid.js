@@ -1,4 +1,4 @@
-import {PARAMETRIC_NAMESPACE} from "../../../source/settings";
+import {PARAMETRIC_NAMESPACE} from '../../module/constants';
 
 
 export default
@@ -8,18 +8,26 @@ export default
   <defs>
     <parametric:ref param="array" default="[]" />
     <parametric:ref param="invalid" default="=!$^#" />
-    </defs>
+  </defs>
+
   <circle id="circle-undefined"
-    parametric:r="notThere" r="1"
-    />
+    parametric:r="notThere"
+               r="1"
+  />
+
   <circle id="circle-undefined-operation"
-    parametric:r="notThere + 2" r="2"
-    />
+    parametric:r="notThere + 2"
+               r="2"
+  />
+
   <circle id="circle-array"
-    parametric:r="array" r="3"
-    />
+    parametric:r="array"
+               r="3"
+  />
+
   <circle id="circle-invalid"
-    parametric:r="invalid" r="4"
-    />
-  </svg>
+    parametric:r="invalid"
+               r="4"
+  />
+</svg>
 `;

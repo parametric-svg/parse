@@ -3,6 +3,6 @@ export default
   <circle id="circle-static"
     r="20"
     x="0"
-    />
-  </svg>
+  />
+</svg>
 `;
