@@ -8,6 +8,7 @@ const {resolve} = require('path');
 const ord = require('ord');
 const tosource = require('tosource');
 const jsdom = require('jsdom');
+const arrayFrom = require('array-from');
 
 const specDirectory = resolve(__dirname,
   'node_modules/parametric-svg-spec/specs'
@@ -30,7 +31,7 @@ specs.forEach(({name, tests}) => tests.forEach((
 
       ast.forEach((expected, index) => {
         const nth = ord(index + 1);
-        const actual = result[index];
+        const actual = arrayFrom(result.attributes)[index];
 
         a.same(
           expected.address,
@@ -50,7 +51,7 @@ specs.forEach(({name, tests}) => tests.forEach((
           `The \`dependencies\` match in the ${nth} parametric element`
         );
 
-        ast.relation.forEach(({input, expectedOutput}) => {
+        expected.relation.forEach(({input, expectedOutput}) => {
           const inputArguments = input.map(tosource).join(', ');
 
           a.same(
