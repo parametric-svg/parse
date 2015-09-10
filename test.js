@@ -49,7 +49,7 @@ specs.forEach(({name, tests}) => tests.forEach((
         `The \`dependencies\` match in the ${nth} parametric element`
       );
 
-      expected.relation.forEach(({input, expectedOutput}) => {
+      expected.relation.forEach(({input, output: expectedOutput}) => {
         const inputArguments = input.map(tosource).join(', ');
 
         is.deepEqual(
