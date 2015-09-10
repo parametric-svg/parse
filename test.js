@@ -10,7 +10,7 @@ const tosource = require('tosource');
 const {jsdom} = require('jsdom');
 const arrayFrom = require('array-from');
 
-const specDirectory = resolve(__dirname,
+const specDirectory = resolve(process.cwd(),
   'node_modules/parametric-svg-spec/specs'
 );
 
