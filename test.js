@@ -1,19 +1,19 @@
 const test = require('ava');
 const {safeLoad: yaml} = require('js-yaml');
-const {readFileSync} = require('fs');
+const {readFileSync, readdirSync} = require('fs');
 const {resolve} = require('path');
 
-const specs = [
-  {name: 'Syntax', file: 'syntax.yaml'},
-].map(({name, file}) => ({
-  name,
-  spec: yaml(readFileSync(
-    resolve(__dirname, `node_modules/parametric-svg-spec/specs/${file}`)
-  )),
-}));
+const specDirectory = resolve(__dirname,
+  'node_modules/parametric-svg-spec/specs'
+);
 
-specs.forEach(({name, spec}) => {
-  spec.tests.forEach(({description}) => {
+const specs = readdirSync(specDirectory)
+  .map((filename) => yaml(readFileSync(
+    resolve(specDirectory, filename)
+  )));
+
+specs.forEach(({name, tests}) => {
+  tests.forEach(({description}) => {
     test(`${name}: ${description}`, (a) => {
       a.fail();
       a.end();
