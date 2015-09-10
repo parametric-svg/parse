@@ -1,6 +1,6 @@
 import parse from './module';
 
-const test = require('ava');
+const test = require('tape-catch');
 const {safeLoad: yaml} = require('js-yaml');
 // const {readFileSync, readdirSync} = require('fs');
 const {readFileSync} = require('fs');
@@ -23,7 +23,7 @@ const specs = ['usage-html5.yaml']
 specs.forEach(({name, tests}) => tests.forEach((
   {description, ast, document}
 ) => {
-  test(`${name}: ${description}`, (a) => {
+  test(`${name}: ${description}`, (is) => {
     jsdom.env(document, (error, window) => {
       if (error) throw error;
 
@@ -33,19 +33,19 @@ specs.forEach(({name, tests}) => tests.forEach((
         const nth = ord(index + 1);
         const actual = arrayFrom(result.attributes)[index];
 
-        a.same(
+        is.deepEqual(
           expected.address,
           actual.address,
           `The \`address\` matches in the ${nth} parametric element`
         );
 
-        a.is(
+        is.equal(
           expected.name,
           actual.name,
           `The \`name\` matches in the ${nth} parametric element`
         );
 
-        a.same(
+        is.deepEqual(
           expected.dependencies,
           actual.dependencies,
           `The \`dependencies\` match in the ${nth} parametric element`
@@ -54,7 +54,7 @@ specs.forEach(({name, tests}) => tests.forEach((
         expected.relation.forEach(({input, expectedOutput}) => {
           const inputArguments = input.map(tosource).join(', ');
 
-          a.same(
+          is.deepEqual(
             actual.relation(...input),
             expectedOutput,
             'The relation function gives the expected result given the ' +
@@ -63,7 +63,7 @@ specs.forEach(({name, tests}) => tests.forEach((
         });
       });
 
-      a.end();
+      is.end();
     });
   });
 }));
