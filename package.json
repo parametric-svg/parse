@@ -27,7 +27,9 @@
     "js-yaml": "3.4.2",
     "nodangel": "1.3.8",
     "opn-cli": "1.0.0",
-    "parametric-svg-spec": "git://github.com/parametric-svg/spec.git#a2c9a78"
+    "ord": "0.1.1",
+    "parametric-svg-spec": "git://github.com/parametric-svg/spec.git#a2c9a78",
+    "tosource": "1.0.0"
   },
   "files": [
     "/*.js",
