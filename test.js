@@ -32,8 +32,8 @@ specs.forEach(({name, tests}) => tests.forEach((
     const result = parse(rootElement);
 
     is.equal(
-      ast.length,
       result.size,
+      ast.length,
       'The AST has the right number of elements'
     );
 
@@ -43,20 +43,20 @@ specs.forEach(({name, tests}) => tests.forEach((
       const actual = arrayFrom(result.attributes)[index];
 
       is.deepEqual(
-        expected.address,
         actual.address,
+        expected.address,
         `The \`address\` matches in the ${nth} parametric element`
       );
 
       is.equal(
-        expected.name,
         actual.name,
+        expected.name,
         `The \`name\` matches in the ${nth} parametric element`
       );
 
       is.deepEqual(
-        expected.dependencies,
         actual.dependencies,
+        expected.dependencies,
         `The \`dependencies\` match in the ${nth} parametric element`
       );
 
