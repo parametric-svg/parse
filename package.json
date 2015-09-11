@@ -34,7 +34,8 @@
     "parametric-svg-spec": "git://github.com/parametric-svg/spec.git#5bda58c",
     "tap-spec": "2.2.2",
     "tape-catch": "1.0.4",
-    "tosource": "1.0.0"
+    "tosource": "1.0.0",
+    "xmldom": "0.1.19"
   },
   "files": [
     "/*.js",

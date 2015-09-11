@@ -9,6 +9,7 @@ const ord = require('ord');
 const tosource = require('tosource');
 const {jsdom} = require('jsdom');
 const arrayFrom = require('array-from');
+const {DOMParser} = require('xmldom');
 
 const specDirectory = resolve(__dirname,
   'node_modules/parametric-svg-spec/specs'
@@ -21,11 +22,14 @@ const specs = ['usage-xml.yaml']
   )));
 
 specs.forEach(({name, tests}) => tests.forEach((
-  {description, ast, document}
+  {description, ast, document, mode}
 ) => {
   test(`${name}: ${description}`, (is) => {
-    const window = jsdom(document).defaultView;
-    const result = parse(window.document.body.parentNode);
+    const rootElement = mode === 'html' ?
+      jsdom(document).defaultView.document.body.parentNode :
+      new DOMParser().parseFromString(document).documentElement;
+
+    const result = parse(rootElement);
 
     ast.forEach((expected, index) => {
       const n = index + 1;
