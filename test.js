@@ -25,9 +25,10 @@ specs.forEach(({name, tests}) => tests.forEach((
   {description, ast, document, mode}
 ) => {
   test(`${name}: ${description}`, (is) => {
-    const rootElement = mode === 'html' ?
+    const rootElement = (mode === 'html' ?
       jsdom(document).defaultView.document.body.parentNode :
-      new DOMParser().parseFromString(document).documentElement;
+      new DOMParser().parseFromString(document).documentElement
+    );
 
     const {attributes} = parse(rootElement);
 
