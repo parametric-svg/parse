@@ -1,3 +1,5 @@
+import {NAMESPACE, PREFIX} from './constants';
+
 const ast = require('parametric-svg-ast');
 const arrayFrom = require('array-from');
 const startsWith = require('starts-with');
@@ -18,7 +20,11 @@ const crawl = (parentAddress) => (attributes, element, indexInParent) => {
   const address = parentAddress.concat(indexInParent);
 
   const currentAttributes = arrayFrom(element.attributes)
-    .filter(({localName}) => localName.match(/^parametric:/))  // POC
+    .filter(({localName}) => nodeBelongsToNamespace({
+      namespace: NAMESPACE,
+      prefix: PREFIX,
+    }, localName))
+
     .map(({localName, value}) => ({
       address,
       name: localName.replace(/^parametric:/, ''),  // POC
