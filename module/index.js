@@ -34,7 +34,7 @@ const crawl = (parentAddress) => (attributes, element, indexInParent) => {
       address,
       name: getLocalName(attribute),
       dependencies: [],  // Proof of concept
-      relation: () => Number(value),  // Proof of concept
+      relation: () => Number(attribute.value),  // Proof of concept
     }));
 
   return getChildren(element).reduce(
