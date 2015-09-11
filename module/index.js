@@ -1,11 +1,17 @@
 const ast = require('parametric-svg-ast');
 const arrayFrom = require('array-from');
+const startsWith = require('starts-with');
 
 const ELEMENT_NODE = 1;
 
 const getChildren = ({children, childNodes}) => (children ?
   arrayFrom(children) :
   arrayFrom(childNodes).filter(({nodeType}) => nodeType === ELEMENT_NODE)
+);
+
+const nodeBelongsToNamespace = ({namespace, prefix = null}, node) => (
+  node.namespaceURI === namespace ||
+  (prefix !== null && startsWith(node.localName, `${prefix}:`))
 );
 
 const crawl = (parentAddress) => (attributes, element, indexInParent) => {
