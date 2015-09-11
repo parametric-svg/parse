@@ -31,6 +31,12 @@ specs.forEach(({name, tests}) => tests.forEach((
 
     const result = parse(rootElement);
 
+    is.equal(
+      ast.length,
+      result.size,
+      'The AST has the right number of elements'
+    );
+
     ast.forEach((expected, index) => {
       const n = index + 1;
       const nth = `${n}${ord(n)}`;
