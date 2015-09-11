@@ -16,13 +16,18 @@ if (typeof require.ensure !== 'function') require.ensure =
     dirname: __dirname,
   });
 
-const specPaths = [
-  'usage-html5',
-  'usage-xml',
-].map((spec) => `raw!./node_modules/parametric-svg-spec/specs/${spec}.yaml`);
-
-require.ensure(specPaths, (require) => {
-  const specs = specPaths.map((path) => yaml(require(path)));
+require.ensure([
+  'raw!./node_modules/parametric-svg-spec/specs/usage-html5.yaml',
+  'raw!./node_modules/parametric-svg-spec/specs/usage-xml.yaml',
+    // NOTE: These paths to be hard-coded in stone – otherwise webpack
+    // gets confused. Remember to keep them in sync with the `require`
+    // calls below.
+], (require) => {
+  const specs = [
+    require('raw!./node_modules/parametric-svg-spec/specs/usage-html5.yaml'),
+    require('raw!./node_modules/parametric-svg-spec/specs/usage-xml.yaml'),
+      // NOTE: See above.
+  ].map(yaml);
 
   specs.forEach((
     {name, tests}
