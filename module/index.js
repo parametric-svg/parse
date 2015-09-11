@@ -12,13 +12,13 @@ const getChildren = ({children, childNodes}) => (children ?
 );
 
 const nodeBelongsToNamespace = ({namespace, prefix = null}, node) => (
-  ('namespaceURI' in node ?
+  (node.namespaceURI ?
     node.namespaceURI === namespace :
     (prefix !== null && startsWith(node.name, `${prefix}:`))
   )
 );
 
-const getLocalName = (node) => ('namespaceURI' in node ?
+const getLocalName = (node) => (node.namespaceURI ?
   node.localName :
   node.name.replace(new RegExp(`^.*?:`), '')
 );
