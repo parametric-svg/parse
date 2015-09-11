@@ -34,7 +34,7 @@ specs.forEach(({name, tests}) => tests.forEach((
     is.equal(
       attributes.size,
       ast.length,
-      'The AST has the right number of attributes'
+      'the AST has the right number of attributes'
     );
 
     ast.forEach((expected, index) => {
@@ -45,19 +45,19 @@ specs.forEach(({name, tests}) => tests.forEach((
       is.deepEqual(
         actual.address,
         expected.address,
-        `The \`address\` matches in the ${nth} parametric element`
+        `the \`address\` matches in the ${nth} parametric attribute`
       );
 
       is.equal(
         actual.name,
         expected.name,
-        `The \`name\` matches in the ${nth} parametric element`
+        `the \`name\` matches in the ${nth} parametric attribute`
       );
 
       is.deepEqual(
         actual.dependencies,
         expected.dependencies,
-        `The \`dependencies\` match in the ${nth} parametric element`
+        `the \`dependencies\` match in the ${nth} parametric attribute`
       );
 
       expected.relation.forEach(({input, output: expectedOutput}) => {
@@ -66,7 +66,7 @@ specs.forEach(({name, tests}) => tests.forEach((
         is.deepEqual(
           actual.relation(...input),
           expectedOutput,
-          `The \`relation\` in the ${nth} parametric element returns ` +
+          `the \`relation\` in the ${nth} parametric attribute returns ` +
           'the expected value when called with the arguments ' +
           `\`(${inputArguments})\`.`
         );
