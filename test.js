@@ -29,18 +29,18 @@ specs.forEach(({name, tests}) => tests.forEach((
       jsdom(document).defaultView.document.body.parentNode :
       new DOMParser().parseFromString(document).documentElement;
 
-    const result = parse(rootElement);
+    const {attributes} = parse(rootElement);
 
     is.equal(
-      result.size,
+      attributes.size,
       ast.length,
-      'The AST has the right number of elements'
+      'The AST has the right number of attributes'
     );
 
     ast.forEach((expected, index) => {
       const n = index + 1;
       const nth = `${n}${ord(n)}`;
-      const actual = arrayFrom(result.attributes)[index];
+      const actual = arrayFrom(attributes)[index];
 
       is.deepEqual(
         actual.address,
