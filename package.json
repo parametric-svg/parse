@@ -11,7 +11,7 @@
     "browser-test": "npm run --silent browser-test:hint && npm run browser-test:bundle && npm run browser-test:open && npm run browser-test:serve",
     "browser-test:bundle": "webpack",
     "browser-test:hint": "echo \\n'Hold on a sec! We’re serving a freshly-baked bundle of tests at http://localhost:9036 . We’ll dish it up to your browser as soon as it’s ready! You can run `npm run browser-test:watch` in another shell for real-time reloads.'\\n",
-    "browser-test:serve": "cd .webpack && cp ../test/runner.html index.html && hostr -p=9036",
+    "browser-test:serve": "cd .webpack && cp ../test/runner.html index.html && hostr --port=9036",
     "browser-test:open": "opn http://localhost:9036",
     "browser-test:watch": "webpack --watch",
     "clean": "git reset && echo '/node_modules/' > .gitignore && git add .gitignore && git stash save --include-untracked --keep-index '`npm run clean` trash can' && git clean --force -d && git reset --hard && echo '\nclean: Uncommitted and ignored files have been moved to git’s stash. To restore them run `git stash pop --quiet; git checkout .gitignore`.'",
