@@ -3,10 +3,9 @@ const arrayFrom = require('array-from');
 
 const ELEMENT_NODE = 1;
 
-const getChildren = ({children, childNodes}) => (
-  children ?
-    arrayFrom(children) :
-    arrayFrom(childNodes).filter(({nodeType}) => nodeType === ELEMENT_NODE)
+const getChildren = ({children, childNodes}) => (children ?
+  arrayFrom(children) :
+  arrayFrom(childNodes).filter(({nodeType}) => nodeType === ELEMENT_NODE)
 );
 
 const crawl = (parentAddress) => (attributes, element, indexInParent) => {
