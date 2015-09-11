@@ -28,7 +28,8 @@ specs.forEach(({name, tests}) => tests.forEach((
     const result = parse(window.document.body.parentNode);
 
     ast.forEach((expected, index) => {
-      const nth = ord(index + 1);
+      const n = index + 1;
+      const nth = `${n}${ord(n)}`;
       const actual = arrayFrom(result.attributes)[index];
 
       is.deepEqual(
@@ -55,8 +56,9 @@ specs.forEach(({name, tests}) => tests.forEach((
         is.deepEqual(
           actual.relation(...input),
           expectedOutput,
-          'The relation function gives the expected result given the ' +
-          `arguments \`(${inputArguments})\`.`
+          `The \`relation\` in the ${nth} parametric element returns ` +
+          'the expected value when called with the arguments ' +
+          `\`(${inputArguments})\`.`
         );
       });
     });
