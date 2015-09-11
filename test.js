@@ -50,7 +50,7 @@ require.ensure(specPaths, (require) => {
         )
       );
 
-      const {attributes} = parse({mode}, rootElement);
+      const {attributes} = parse({htmlMode: (mode === 'html')}, rootElement);
 
       is.equal(
         attributes.size,
