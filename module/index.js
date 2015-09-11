@@ -11,42 +11,48 @@ const getChildren = ({children, childNodes}) => (children ?
   arrayFrom(childNodes).filter(({nodeType}) => nodeType === ELEMENT_NODE)
 );
 
-const nodeBelongsToNamespace = ({namespace, prefix = null}, node) => (
-  (node.namespaceURI ?
+const nodeBelongsToNamespace = ({mode, namespace, prefix = null}, node) => (
+  (mode === 'html' ?
     node.namespaceURI === namespace :
     (prefix !== null && startsWith(node.name, `${prefix}:`))
   )
 );
 
-const getLocalName = (node) => (node.namespaceURI ?
+const getLocalName = ({mode}, node) => (mode === 'html' ?
   node.localName :
   node.name.replace(new RegExp(`^.*?:`), '')
 );
 
-const crawl = (parentAddress) => (attributes, element, indexInParent) => {
+const crawl = ({mode, parentAddress}) => (
+  attributes, element, indexInParent
+) => {
   const address = parentAddress.concat(indexInParent);
 
   const currentAttributes = arrayFrom(element.attributes)
     .filter((node) => nodeBelongsToNamespace({
       namespace: NAMESPACE,
       prefix: PREFIX,
+      mode,
     }, node))
 
     .map((attribute) => ({
       address,
-      name: getLocalName(attribute),
+      name: getLocalName({mode}, attribute),
       dependencies: [],  // Proof of concept
       relation: () => Number(attribute.value),  // Proof of concept
     }));
 
   return getChildren(element).reduce(
-    crawl(address),
+    crawl({mode, parentAddress: address}),
     attributes.concat(currentAttributes)
   );
 };
 
-export default (root) => {
-  const attributes = getChildren(root).reduce(crawl([]), []);
+export default ({mode = 'xml'}, root) => {
+  const attributes = getChildren(root).reduce(
+    crawl({mode, parentAddress: []}),
+    []
+  );
 
   return ast({attributes, defaults: []});
 };
