@@ -13,22 +13,27 @@ const getChildren = ({children, childNodes}) => (children ?
 
 const nodeBelongsToNamespace = ({namespace, prefix = null}, node) => (
   node.namespaceURI === namespace ||
-  (prefix !== null && startsWith(node.localName, `${prefix}:`))
+  (prefix !== null && startsWith(node.name, `${prefix}:`))
+);
+
+const getLocalName = (node) => (
+  (node.namespaceURI && node.localName) ||
+  node.name.replace(new RegExp(`^.*?:`), '')
 );
 
 const crawl = (parentAddress) => (attributes, element, indexInParent) => {
   const address = parentAddress.concat(indexInParent);
 
   const currentAttributes = arrayFrom(element.attributes)
-    .filter(({localName}) => nodeBelongsToNamespace({
+    .filter((node) => nodeBelongsToNamespace({
       namespace: NAMESPACE,
       prefix: PREFIX,
-    }, localName))
+    }, node))
 
-    .map(({localName, value}) => ({
+    .map((attribute) => ({
       address,
-      name: localName.replace(/^parametric:/, ''),  // POC
-      dependencies: [],
+      name: getLocalName(attribute),
+      dependencies: [],  // Proof of concept
       relation: () => Number(value),  // Proof of concept
     }));
 
