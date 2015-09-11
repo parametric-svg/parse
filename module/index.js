@@ -1,6 +1,14 @@
 const ast = require('parametric-svg-ast');
 const arrayFrom = require('array-from');
 
+const ELEMENT_NODE = 1;
+
+const getChildren = ({children, childNodes}) => (
+  children ?
+    arrayFrom(children) :
+    arrayFrom(childNodes).filter(({nodeType}) => nodeType === ELEMENT_NODE)
+);
+
 const crawl = (parentAddress) => (attributes, element, indexInParent) => {
   const address = parentAddress.concat(indexInParent);
 
@@ -13,14 +21,14 @@ const crawl = (parentAddress) => (attributes, element, indexInParent) => {
       relation: () => Number(value),  // Proof of concept
     }));
 
-  return arrayFrom(element.children).reduce(
+  return getChildren(element).reduce(
     crawl(address),
     attributes.concat(currentAttributes)
   );
 };
 
 export default (root) => {
-  const attributes = arrayFrom(root.children).reduce(crawl([]), []);
+  const attributes = getChildren(root).reduce(crawl([]), []);
 
   return ast({attributes, defaults: []});
 };
