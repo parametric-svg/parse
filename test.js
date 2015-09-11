@@ -16,7 +16,7 @@ const specDirectory = resolve(__dirname,
 );
 
 // const specs = readdirSync(specDirectory)
-const specs = ['usage-xml.yaml']
+const specs = ['usage-html5.yaml', 'usage-xml.yaml']
   .map((filename) => yaml(readFileSync(
     resolve(specDirectory, filename)
   )));
