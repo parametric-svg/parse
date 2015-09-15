@@ -3,6 +3,7 @@ import {NAMESPACE, PREFIX} from './constants';
 const ast = require('parametric-svg-ast');
 const arrayFrom = require('array-from');
 const startsWith = require('starts-with');
+const {eval: evaluate} = require('mathjs');
 
 const ELEMENT_NODE = 1;
 
@@ -39,7 +40,7 @@ const crawl = (parentAddress) => (allAttributes, element, indexInParent) => {
       address,
       name: getLocalName(attribute),
       dependencies: [],  // Proof of concept
-      relation: () => Number(attribute.value),  // Proof of concept
+      relation: () => evaluate(attribute.value),  // Proof of concept
     }));
 
   return getChildren(element).reduce(
