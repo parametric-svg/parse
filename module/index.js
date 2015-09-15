@@ -24,7 +24,10 @@ const getLocalName = (node) => (node.namespaceURI ?
 );
 
 const crawl = (parentAddress) => (allAttributes, element, indexInParent) => {
-  const address = parentAddress.concat(indexInParent);
+  const address = (indexInParent === null ?
+    parentAddress :
+    parentAddress.concat(indexInParent)
+  );
 
   const currentAttributes = arrayFrom(element.attributes)
     .filter((node) => nodeBelongsToNamespace({
@@ -46,7 +49,7 @@ const crawl = (parentAddress) => (allAttributes, element, indexInParent) => {
 };
 
 export default (root) => {
-  const attributes = crawl([])([], root, 0);
+  const attributes = crawl([])([], root, null);
 
   return ast({attributes, defaults: []});
 };
