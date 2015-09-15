@@ -1,9 +1,9 @@
 module.exports = {
-  entry: './test.js',
+  entry: './test/runner.js',
 
   output: {
     path: __dirname + '/.webpack',
-    filename: 'test.js',
+    filename: 'runner.js',
   },
 
   module: {loaders: [{

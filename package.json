@@ -44,6 +44,7 @@
     "ord": "0.1.1",
     "parametric-svg-spec": "git://github.com/parametric-svg/spec.git#5bda58c",
     "raw-loader": "0.5.1",
+    "tap-dev-tool": "1.3.0",
     "tap-spec": "2.2.2",
     "tape-catch": "1.0.4",
     "tosource": "1.0.0",
