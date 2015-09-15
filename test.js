@@ -13,9 +13,7 @@ const wrap = (element) => (
   version="1.1"
   xmlns="http://www.w3.org/2000/svg"
   xmlns:parametric="//parametric-svg.js.org/v1"
-  >
-  ${element}
-</svg>
+>${element}</svg>
 `
 );
 
@@ -80,7 +78,7 @@ require.ensure([
       ).documentElement;
 
       const rootElement = (elementMode ?
-        document.firstElementChild :
+        document.firstChild :
         document
       );
 
