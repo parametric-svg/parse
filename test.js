@@ -8,6 +8,17 @@ const {jsdom} = require('jsdom');
 const arrayFrom = require('array-from');
 const {DOMParser: XmldomParser} = require('xmldom');
 
+const wrap = (element) => (
+`<svg
+  version="1.1"
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:parametric="//parametric-svg.js.org/v1"
+  >
+  ${element}
+</svg>
+`
+);
+
 if (typeof require.ensure !== 'function') require.ensure =
   require('isomorphic-ensure')({
     loaders: {
@@ -37,23 +48,40 @@ require.ensure([
     test(`${name}: ${description}`, (is) => {
       const inBrowser = typeof window !== 'undefined' && window.DOMParser;
       const htmlMode = mode === 'HTML5 document';
+      const [document, xmlMode] = (
+        (mode === 'XML document' &&
+          [original, true]
+        ) ||
+        (mode === 'Element' &&
+          [wrap(original), true]
+        ) ||
+        (
+          [original, false]
+        )
+      );
+
       const rootElement = (
         (inBrowser && htmlMode &&
-          (new window.DOMParser()).parseFromString(original, 'text/html')
+          (new window.DOMParser()).parseFromString(document, 'text/html')
             .documentElement
         ) ||
-        (inBrowser && !htmlMode &&
-          (new window.DOMParser()).parseFromString(original, 'application/xml')
+        (inBrowser && xmlMode &&
+          (new window.DOMParser()).parseFromString(document, 'application/xml')
             .documentElement
         ) ||
         (!inBrowser && htmlMode &&
-          jsdom(original).defaultView.document.body.parentNode
+          jsdom(document).defaultView.document.body.parentNode
         ) ||
-        (!inBrowser && !htmlMode &&
-          (new XmldomParser()).parseFromString(original, 'application/xml')
+        (!inBrowser && xmlMode &&
+          (new XmldomParser()).parseFromString(document, 'application/xml')
             .documentElement
+        ) ||
+        (
+          null
         )
       );
+
+      if (rootElement === null) throw new Error('Unknown test mode');
 
       const {attributes} = parse(rootElement);
 
