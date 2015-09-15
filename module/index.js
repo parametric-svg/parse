@@ -23,7 +23,7 @@ const getLocalName = (node) => (node.namespaceURI ?
   node.name.replace(new RegExp(`^.*?:`), '')
 );
 
-const crawl = (parentAddress) => (attributes, element, indexInParent) => {
+const crawl = (parentAddress) => (allAttributes, element, indexInParent) => {
   const address = parentAddress.concat(indexInParent);
 
   const currentAttributes = arrayFrom(element.attributes)
@@ -41,12 +41,12 @@ const crawl = (parentAddress) => (attributes, element, indexInParent) => {
 
   return getChildren(element).reduce(
     crawl(address),
-    attributes.concat(currentAttributes)
+    allAttributes.concat(currentAttributes)
   );
 };
 
 export default (root) => {
-  const attributes = getChildren(root).reduce(crawl([]), []);
+  const attributes = crawl([])([], root, 0);
 
   return ast({attributes, defaults: []});
 };
