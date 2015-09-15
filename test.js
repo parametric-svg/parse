@@ -65,7 +65,7 @@ require.ensure([
 
       ast.forEach((expected, index) => {
         const n = index + 1;
-        const nth = `${n}${ord(n)}`;
+        const nth = `${n}-${ord(n)}`;
         const actual = arrayFrom(attributes)[index];
 
         is.deepEqual(
