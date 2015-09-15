@@ -44,7 +44,7 @@
     "nodangel": "1.3.8",
     "opn-cli": "1.0.0",
     "ord": "0.1.1",
-    "parametric-svg-spec": "git://github.com/parametric-svg/spec.git#fa92e37",
+    "parametric-svg-spec": "git://github.com/parametric-svg/spec.git#abf9f1e",
     "raw-loader": "0.5.1",
     "tap-dev-tool": "1.3.0",
     "tap-spec": "2.2.2",
