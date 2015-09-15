@@ -30,13 +30,13 @@ require.ensure([
   ].map(yaml);
 
   specs.forEach((
-    {name, tests}
+    {name, tests, mode}
   ) => tests.forEach((
-    {description, ast, document, mode}
+    {description, ast, document}
   ) => {
     test(`${name}: ${description}`, (is) => {
       const inBrowser = typeof window !== 'undefined' && window.DOMParser;
-      const htmlMode = mode === 'html';
+      const htmlMode = mode === 'html5';
       const rootElement = (
         (inBrowser && htmlMode &&
           (new window.DOMParser()).parseFromString(document, 'text/html')
