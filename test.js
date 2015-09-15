@@ -32,25 +32,25 @@ require.ensure([
   specs.forEach((
     {name, tests, mode}
   ) => tests.forEach((
-    {description, ast, document}
+    {description, ast, original}
   ) => {
     test(`${name}: ${description}`, (is) => {
       const inBrowser = typeof window !== 'undefined' && window.DOMParser;
-      const htmlMode = mode === 'html5';
+      const htmlMode = mode === 'HTML5 document';
       const rootElement = (
         (inBrowser && htmlMode &&
-          (new window.DOMParser()).parseFromString(document, 'text/html')
+          (new window.DOMParser()).parseFromString(original, 'text/html')
             .documentElement
         ) ||
         (inBrowser && !htmlMode &&
-          (new window.DOMParser()).parseFromString(document, 'application/xml')
+          (new window.DOMParser()).parseFromString(original, 'application/xml')
             .documentElement
         ) ||
         (!inBrowser && htmlMode &&
-          jsdom(document).defaultView.document.body.parentNode
+          jsdom(original).defaultView.document.body.parentNode
         ) ||
         (!inBrowser && !htmlMode &&
-          (new XmldomParser()).parseFromString(document, 'application/xml')
+          (new XmldomParser()).parseFromString(original, 'application/xml')
             .documentElement
         )
       );
