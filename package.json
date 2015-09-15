@@ -8,9 +8,8 @@
     "starts-with": "^1.0.2"
   },
   "scripts": {
-    "browser-test": "npm run --silent browser-test:hint && npm run browser-test:bundle && npm run browser-test:open && npm run browser-test:serve",
-    "browser-test:bundle": "webpack",
-    "browser-test:hint": "echo \\n'Hold on a sec! We’re serving a freshly-baked bundle of tests at http://localhost:9036 . We’ll dish it up to your browser as soon as it’s ready! You can run `npm run browser-test:watch` in another shell for real-time reloads.'\\n",
+    "browser-test": "npm run --silent browser-test:hint && concurrent 'npm run browser-test:watch' 'npm run browser-test:serve' 'npm run browser-test:open'",
+    "browser-test:hint": "echo \\n'Hold on a sec! We’re serving a freshly-baked bundle of tests at http://localhost:9036 . We’ll dish it up to your browser as soon as it’s ready!'\\n",
     "browser-test:serve": "cd .webpack && cp ../test/runner.html index.html && hostr --port=9036",
     "browser-test:open": "opn http://localhost:9036",
     "browser-test:watch": "webpack --watch",
@@ -30,6 +29,7 @@
     "babel-core": "5.8.24",
     "babel-eslint": "4.1.1",
     "babel-loader": "5.3.2",
+    "concurrently": "0.1.1",
     "coveralls": "2.11.4",
     "eslint": "1.3.1",
     "eslint-config-airbnb": "0.0.8",
