@@ -47,41 +47,38 @@ require.ensure([
   ) => {
     test(`${name}: ${description}`, (is) => {
       const inBrowser = typeof window !== 'undefined' && window.DOMParser;
+
       const htmlMode = mode === 'HTML5 document';
-      const [document, xmlMode] = (
-        (mode === 'XML document' &&
-          [original, true]
-        ) ||
-        (mode === 'Element' &&
-          [wrap(original), true]
-        ) ||
-        (
-          [original, false]
-        )
+      const xmlMode = mode === 'XML document';
+      const elementMode = mode === 'Element';
+      if (!htmlMode && !xmlMode && !elementMode) throw new Error(
+        'Unknown test mode'
       );
 
-      const rootElement = (
-        (inBrowser && htmlMode &&
-          (new window.DOMParser()).parseFromString(document, 'text/html')
-            .documentElement
-        ) ||
-        (inBrowser && xmlMode &&
-          (new window.DOMParser()).parseFromString(document, 'application/xml')
-            .documentElement
-        ) ||
-        (!inBrowser && htmlMode &&
-          jsdom(document).defaultView.document.body.parentNode
-        ) ||
-        (!inBrowser && xmlMode &&
-          (new XmldomParser()).parseFromString(document, 'application/xml')
-            .documentElement
-        ) ||
-        (
-          null
-        )
+      const documentSource = (elementMode ?
+        wrap(original) :
+        original
       );
 
-      if (rootElement === null) throw new Error('Unknown test mode');
+      const contentType = (htmlMode ?
+        'text/html' :
+        'application/xml'
+      );
+
+      const Parser = (inBrowser ?
+        window.DOMParser :
+        XmldomParser
+      );
+
+      const document = (!inBrowser && htmlMode ?
+        jsdom(documentSource).defaultView.document :
+        (new Parser()).parseFromString(documentSource, contentType)
+      ).documentElement;
+
+      const rootElement = (elementMode ?
+        document.firstElementChild :
+        document
+      );
 
       const {attributes} = parse(rootElement);
 
