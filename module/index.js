@@ -23,8 +23,11 @@ const getLocalName = (node) => (node.namespaceURI ?
   node.name.replace(new RegExp(`^.*?:`), '')
 );
 
-const crawl = (parentAddress) => (attributes, element, indexInParent) => {
-  const address = parentAddress.concat(indexInParent);
+const crawl = (parentAddress) => (allAttributes, element, indexInParent) => {
+  const address = (indexInParent === null ?
+    parentAddress :
+    parentAddress.concat(indexInParent)
+  );
 
   const currentAttributes = arrayFrom(element.attributes)
     .filter((node) => nodeBelongsToNamespace({
@@ -41,12 +44,12 @@ const crawl = (parentAddress) => (attributes, element, indexInParent) => {
 
   return getChildren(element).reduce(
     crawl(address),
-    attributes.concat(currentAttributes)
+    allAttributes.concat(currentAttributes)
   );
 };
 
 export default (root) => {
-  const attributes = getChildren(root).reduce(crawl([]), []);
+  const attributes = crawl([])([], root, null);
 
   return ast({attributes, defaults: []});
 };
