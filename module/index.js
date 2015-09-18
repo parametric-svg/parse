@@ -42,8 +42,12 @@ const crawl = (parentAddress) => (allAttributes, element, indexInParent) => {
       const expressionTree = parse(attribute.value);
 
       const dependencies = [];
-      expressionTree.traverse((node) => {
-        if (node.isSymbolNode) dependencies.push(node.name);
+      expressionTree.traverse(({isSymbolNode, name}) => {
+        if (
+          isSymbolNode &&
+          !includes(['true', 'false'], name)
+            // https://github.com/josdejong/mathjs/issues/468
+        ) dependencies.push(name);
       });
 
       return {
