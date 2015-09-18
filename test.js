@@ -30,6 +30,7 @@ require.ensure([
   'raw!./node_modules/parametric-svg-spec/specs/usage-xml.yaml',
   'raw!./node_modules/parametric-svg-spec/specs/parametric-attributes.yaml',
   'raw!./node_modules/parametric-svg-spec/specs/syntax-operators.yaml',
+  'raw!./node_modules/parametric-svg-spec/specs/syntax-variables.yaml',
     // NOTE: These paths have to be hard-coded in stone – otherwise webpack
     // gets confused. Remember to keep them in sync with the `require`
     // calls below.
@@ -42,6 +43,9 @@ require.ensure([
     ),
     require(
       'raw!./node_modules/parametric-svg-spec/specs/syntax-operators.yaml'
+    ),
+    require(
+      'raw!./node_modules/parametric-svg-spec/specs/syntax-variables.yaml'
     ),
       // NOTE: See above.
   ].map(yaml);
