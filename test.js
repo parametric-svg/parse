@@ -122,14 +122,12 @@ require.ensure([
         );
 
         expected.relation.forEach(({input, output: expectedOutput}) => {
-          const inputArguments = input.map(tosource).join(', ');
-
           is.deepEqual(
-            actual.relation(...input),
+            actual.relation(input),
             expectedOutput,
             `the \`relation\` in the ${nth} parametric attribute returns ` +
             'the expected value when called with the arguments ' +
-            `\`(${inputArguments})\`.`
+            `\`${tosource(input)}\`.`
           );
         });
       });
