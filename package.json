@@ -4,6 +4,7 @@
   "description": "A JS-based parser for parametric.svg graphics",
   "dependencies": {
     "array-from": "^2.0.2",
+    "array-includes": "^3.0.1",
     "mathjs": "^2.2.0",
     "parametric-svg-ast": "^1.0.1",
     "starts-with": "^1.0.2"
@@ -45,7 +46,7 @@
     "nodangel": "1.3.8",
     "opn-cli": "1.0.0",
     "ord": "0.1.1",
-    "parametric-svg-spec": "git://github.com/parametric-svg/spec.git#a9bf39e67a8b47c1da41f69944739354596bf2b7",
+    "parametric-svg-spec": "git://github.com/parametric-svg/spec.git#7ab9639ce17c0e99e910bbbdf6952e8a0d1d5e5a",
     "raw-loader": "0.5.1",
     "tap-dev-tool": "1.3.0",
     "tap-spec": "2.2.2",

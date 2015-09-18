@@ -3,7 +3,9 @@ import {NAMESPACE, PREFIX} from './constants';
 const ast = require('parametric-svg-ast');
 const arrayFrom = require('array-from');
 const startsWith = require('starts-with');
-const {eval: evaluate} = require('mathjs');
+const {parse} = require('mathjs');
+const includes = require('array-includes');
+const {keys} = Object;
 
 const ELEMENT_NODE = 1;
 
@@ -36,12 +38,32 @@ const crawl = (parentAddress) => (allAttributes, element, indexInParent) => {
       prefix: PREFIX,
     }, node))
 
-    .map((attribute) => ({
-      address,
-      name: getLocalName(attribute),
-      dependencies: [],  // Proof of concept
-      relation: () => evaluate(attribute.value),  // Proof of concept
-    }));
+    .map((attribute) => {
+      const expressionTree = parse(attribute.value);
+
+      const dependencies = [];
+      expressionTree.traverse(({isSymbolNode, name}) => {
+        if (
+          isSymbolNode &&
+          !includes(['true', 'false'], name)
+            // https://github.com/josdejong/mathjs/issues/468
+        ) dependencies.push(name);
+      });
+
+      return {
+        address,
+        name: getLocalName(attribute),
+        dependencies,
+        relation: (scope) => {
+          const availableVariables = keys(scope);
+          if (!dependencies.every(dep => includes(availableVariables, dep))) {
+            return undefined;
+          }
+
+          return expressionTree.eval(scope);
+        },
+      };
+    });
 
   return getChildren(element).reduce(
     crawl(address),
