@@ -3,7 +3,7 @@ import {NAMESPACE, PREFIX} from './constants';
 const ast = require('parametric-svg-ast');
 const arrayFrom = require('array-from');
 const startsWith = require('starts-with');
-const {eval: evaluate} = require('mathjs');
+const {eval: evaluate, parse} = require('mathjs');
 
 const ELEMENT_NODE = 1;
 
@@ -36,12 +36,21 @@ const crawl = (parentAddress) => (allAttributes, element, indexInParent) => {
       prefix: PREFIX,
     }, node))
 
-    .map((attribute) => ({
-      address,
-      name: getLocalName(attribute),
-      dependencies: [],  // Proof of concept
-      relation: () => evaluate(attribute.value),  // Proof of concept
-    }));
+    .map((attribute) => {
+      const expressionTree = parse(attribute.value);
+
+      const dependencies = [];
+      expressionTree.traverse((node) => {
+        if (node.isSymbolNode) dependencies.push(node.name);
+      });
+
+      return {
+        address,
+        name: getLocalName(attribute),
+        dependencies,
+        relation: () => evaluate(attribute.value),  // Proof of concept
+      };
+    });
 
   return getChildren(element).reduce(
     crawl(address),
