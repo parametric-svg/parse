@@ -26,6 +26,15 @@ const getLocalName = (node) => (node.namespaceURI ?
   node.name.replace(new RegExp(`^.*?:`), '')
 );
 
+const stringDelimiter = /(^|[^\\])`/g;
+const escapedBacktick = /\\`/g;
+const newline = /\n/g;
+const digestValue = (value) => (value
+  .replace(stringDelimiter, '$1"')
+  .replace(escapedBacktick, '`')
+  .replace(newline, '\\n')
+);
+
 const crawl = (parentAddress) => (allAttributes, element, indexInParent) => {
   const address = (indexInParent === null ?
     parentAddress :
@@ -39,7 +48,7 @@ const crawl = (parentAddress) => (allAttributes, element, indexInParent) => {
     }, node))
 
     .map((attribute) => {
-      const expressionTree = parse(attribute.value);
+      const expressionTree = parse(digestValue(attribute.value));
 
       const dependencies = [];
       expressionTree.traverse(({isSymbolNode, name}) => {
