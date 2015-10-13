@@ -28,8 +28,10 @@ const getLocalName = (node) => (node.namespaceURI ?
 
 const stringDelimiter = /(^|[^\\])`/g;
 const escapedBacktick = /\\`/g;
+const doubleQuote = /"/g;
 const newline = /\n/g;
 const digestValue = (value) => (value
+  .replace(doubleQuote, '\\"')
   .replace(stringDelimiter, '$1"')
   .replace(escapedBacktick, '`')
   .replace(newline, '\\n')
